@@ -1,68 +1,45 @@
-import React, { useState } from  "react";
+import React, { Component } from  "react";
+import Grid from './components/Grid.jsx';
+import Box from './components/Box.jsx';
 import './assets/styles.scss';
-import produce from 'immer';
 
-const cellRows = 100;
-const cellColumns = 100;
+class App extends Component {
+    constructor(props) {
+      super(props);
+      this.speed = 100;
+      this.rows = 50;
+      this.columns = 70;
 
-const App = () => {  
-    
-    // create the grid
-    const [grid, setGrid] = useState(() => {
-        const rows = [];
-        for (let i = 0; i < cellRows; i++) {
-            rows.push(Array.from(Array(cellColumns), () => {
-                return 0;
-            })) //figure out a different way to create the rows
-        }
-        return rows;
-    });
-    console.log('grid', grid)
-    
-    const [running, setRunning] = useState(false);
+      this.state = {
+          generation: 0,
+          entireGrid: Array(this.rows).fill().map(() => {this.columns}).fill(false)
+      }
+      this.selectBox = this.selectBox.bind(this);
+    }
+    // never update the state directly
+    selectBox(row, col) {
+        let gridCopy = arrayClone(this.state.entireGrid); // couldn't i do ...this.state.entiregrid? or immy
+        // find the square that was clicked, and set it to its opposite
+        gridCopy[row][col] = !gridCopy[row][col];
+        this.setState({
+            entireGrid: gridCopy
+        })
+    };
 
-    const runningRef = useRef();
-    const runningRef = useRef(running);
-    runningRef.current = running;
-
-    
-
-    return (
-        <React.Fragment>
-            {/* instead of having a button, we want to change it to clicking on the actual board */}
-            <button
-                onClick={() => {
-                    setRunning(!running);
-                }}
-            >{running ? "start" : "start"}</button>
-
-
-            <div style={{display: "grid", gridTemplateColumns: `repeat(${cellColumns}, 20px)`}}>
-                {grid.map((rows, i) => 
-                    rows.map((col, j) => (<div 
-                    key={`${i}-${j}`}
-                    onClick={() => {
-                        console.log(`${i}-${j}`)
-
-                        // create a copy of the grid to mutate
-                        const newGrid = produce(grid, gridCopy => {
-                            gridCopy[i][j] = grid[i][j] ? 0 : 1;
-                        });
-
-                        // basically change state
-                        setGrid(newGrid)
-                    }}
-                    style={{
-                        width: 20, 
-                        height: 20,
-                        backgroundColor: grid[i][j] ? 'blue' : undefined,
-                        border: "1px solid black"
-                    }}/>
-                )))}
-            </div>
-        </React.Fragment>
-    );
-}
-
- 
-export default App;
+    render() {
+      return (
+        <div>
+            <h1> The Game of Life </h1>
+            <Grid
+                entireGrid={this.state.entireGrid} 
+                rows={this.rows}
+                columns={this.columns}
+                selectBox={this.selectBox}
+            />
+            <h2> Generation: {this.state.generation} </h2>
+        </div>
+      );
+    }
+  }
+  
+  export default App;
