@@ -12,18 +12,20 @@ class App extends Component {
 
       this.state = {
           generation: 0,
-          entireGrid: Array(this.rows).fill().map(() => {this.columns}).fill(false)
+          entireGrid: Array(this.rows).fill().map(() => Array(this.columns).fill(0))
       }
-      this.selectBox = this.selectBox.bind(this);
+      this.colorBox = this.colorBox.bind(this);   
     }
-    // never update the state directly
-    selectBox(row, col) {
-        let gridCopy = arrayClone(this.state.entireGrid); // couldn't i do ...this.state.entiregrid? or immy
+
+    colorBox(row, col) {
+        let gridCopy = [...this.state.entireGrid];
+
         // find the square that was clicked, and set it to its opposite
         gridCopy[row][col] = !gridCopy[row][col];
+
         this.setState({
             entireGrid: gridCopy
-        })
+        });
     };
 
     render() {
@@ -34,7 +36,7 @@ class App extends Component {
                 entireGrid={this.state.entireGrid} 
                 rows={this.rows}
                 columns={this.columns}
-                selectBox={this.selectBox}
+                colorBox={this.colorBox}
             />
             <h2> Generation: {this.state.generation} </h2>
         </div>
