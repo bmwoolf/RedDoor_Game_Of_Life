@@ -4,7 +4,7 @@ import Box from './Box.jsx';
 const Grid = (props) => {
     const width = props.columns * 16;
     let rowsArr = [];
-// change box naming
+
     let boxClass = "";
 //change to map method
     for (let i = 0; i < props.rows; i++) {
@@ -18,7 +18,8 @@ const Grid = (props) => {
                     boxId={boxKey}
                     row={i}
                     column={j}
-                    selectBox={props.selectBox}
+                    colorBox={props.colorBox}
+                    play2={props.play2}
                 />
             );
         }

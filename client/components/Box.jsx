@@ -2,21 +2,17 @@ import React from 'react';
 import Grid from './Grid.jsx';
 
 const Box = (props) => {
-    // have to pass in information from this component
-    // selectBox = () => {
-    //     props.selectBox(props.row, props.column);
-    // };
-
-    selectBox = (props) => {
-        props.selectBox(props.row, props.column);
+    // create a local function to invoke colorBox() with multiple args
+    function color() {
+        console.log('color')
+        props.colorBox(props.row, props.column);
+        props.play2() // this cancels out the coloring functionality
     }
-
     return ( 
-        
         <div 
           className={props.boxClass}
           id={props.key}
-          onClick={selectBox}
+          onClick={() => color()}
         >
         </div>
         );
