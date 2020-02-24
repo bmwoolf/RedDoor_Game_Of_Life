@@ -9,18 +9,15 @@ class App extends Component {
       this.speed = 100;
       this.rows = 50;
       this.columns = 70;
-
+    
       this.state = {
           generation: 0,
           entireGrid: Array(this.rows).fill().map(() => Array(this.columns).fill(0))
       }
       this.colorBox = this.colorBox.bind(this); 
       this.random = this.random.bind(this);
-    //   this.play = this.play.bind(this);
-    //   this.playButton = this.playButton(this);
-    //   this.countNeighbors = this.countNeighbors(this);
       this.play2 = this.play2.bind(this);
-    //   this.testPlay = this.testPlay.bind(this);
+      this.aliveNeighbors = this.aliveNeighbors.bind(this);
     }
 
     // onClick, we want to fill the individual boxes 
@@ -35,13 +32,14 @@ class App extends Component {
         });
     };
 
-    // generate random spots on the grid
+    // generate random spots on the grid to start the game (cannot start wwith just one cell)
     random() {
+        console.log('random happened')
         let mirrorGrid = [...this.state.entireGrid];
         for (let i = 0; i < this.rows; i++) {
             for (let j = 0; j < this.columns; j++) {
-                if (Math.floor(Math.random() * 4) == 1) {
-                    mirrorGrid[i][j] = true;
+                if (Math.floor(Math.random() * 9) == 1) {
+                    mirrorGrid[i][j] = 1;
                 }
             }
         }
@@ -50,7 +48,97 @@ class App extends Component {
         })
     };
     
-    // count the neighbors
+    play2() {
+        let mirrorGrid = [...this.state.entireGrid];
+        for (let i = 0; i < mirrorGrid.length; i++) {
+            for (let j = 0; j < mirrorGrid[i].length; j++) {
+                let liveCells = this.aliveNeighbors(mirrorGrid, i, j);
+                // if the cell is alive and underpopulation (< 2) or overpopulation (> 3)
+                if (mirrorGrid[i][j] === 1 && (liveCells < 2 || liveCells > 3)) {
+                    mirrorGrid[i][j] = 0; 
+                  } 
+                // if the cell is dead and there are three live surrounding, resurrect
+                else if (mirrorGrid[i][j] === 0 && liveCells === 3) {
+                  mirrorGrid[i][j] = 1; 
+                }
+            }
+        }
+
+        // looping through again
+        // for (let i = 0; i < mirrorGrid.length; i++) {
+        //     for (let j = 0; j < mirrorGrid[i].length; j++){
+        //         // current box mod 2
+        //         // input 2 -> 0, input 3 -> 1
+        //       mirrorGrid[i][j] %= 2;
+
+        //       if(mirrorGrid[i][j] === 1)
+        //         this.colorBox()
+                
+        //     }
+        //   }
+          this.setState({
+            entireGrid: mirrorGrid,
+            generation: this.state.generation + 1
+          })
+
+        //   for (let i = 0; i < mirrorGrid.length; i++) {
+        //         for (let j = 0; j < mirrorGrid[i].length; j++){
+        //             // current box mod 2
+        //             // input 2 -> 0, input 3 -> 1
+        //         //   mirrorGrid[i][j] %= 2;
+    
+        //           if(mirrorGrid[i][j] === 1)
+        //             this.colorBox()
+                    
+        //         }
+        //       }
+    }
+
+    // to count how maney neighbors are surrounding the cell
+    aliveNeighbors(board, i, j) {
+        let count = 0;
+        let indexes = [[1, -1], [1, 0], [1, 1], [0, -1], [0, 1], [-1, -1], [-1, 0], [-1, 1]];
+        for (let index of indexes) {
+            if (index[0] + i < 0 || index[0] + i > board.length - 1 ||
+            index[1] + j < 0 || index[1] + j > board[0].length - 1) continue;
+            if (board[index[0] + i][index[1] + j] === 1 ||
+            board[index[0] + i][index[1] + j] === 2) count++;
+        }
+        return count;
+    }
+
+    // to make the game actually start
+        playButton() {
+            clearInterval(this.intervalId);
+            this.intervalId = setInterval(this.play2, this.speed);
+        };
+
+    // after the component (grid) mounts, we want to invoke random to test the grid
+    componentDidMount() {
+        this.random();
+        this.playButton();
+    };
+
+    render() {
+      return (
+        <div>
+            <h1> The Game of Life </h1>
+            <Grid
+                entireGrid={this.state.entireGrid} 
+                rows={this.rows}
+                columns={this.columns}
+                colorBox={this.colorBox}
+                play2={this.play2}
+            />
+            <h2> Generation: {this.state.generation} </h2>
+        </div>
+      );
+    }
+  }
+  
+  export default App;
+
+  // count the neighbors
     // countNeighbors(grid, x, y) {
     //     let sum = 0;
     //     console.log('x', x);
@@ -131,69 +219,7 @@ class App extends Component {
     //     }
         
     //     this.setState({
-    //         entireGrid: grid2,
-    //         generation: this.state.generation + 1
+            // entireGrid: grid2,
+            // generation: this.state.generation + 1
     //     });
-
-    // };
-    play2() {
-        console.log('in here')
-        let mirrorGrid = [...this.state.entireGrid];
-        console.log('mirrorGrid', mirrorGrid);
-        for (let i = 0; i < mirrorGrid.length; i++) {
-            for (let j = 0; j < mirrorGrid[i].length; j++) {
-                let liveCells = this.aliveNeighbors(mirrorGrid, i, j)
-            }
-        }
-    }
-
-
-    aliveNeighbors(board, i, j) {
-        console.log('in here: board, i, j', board, i, j) // woo its connecting on click!
-        // let count = 0;
-        // let indexes = [[1, -1], [1, 0], [1, 1], [0, -1], [0, 1], [-1, -1], [-1, 0], [-1, 1]];
-        // for (let index of indexes) {
-        //     if (index[0] + i < 0 || index[0] + i > board.length - 1 ||
-        //     index[1] + j < 0 || index[1] + j > board[0].length - 1) continue;
-        //     if (board[index[0] + i][index[1] + j] === 1 ||
-        //     board[index[0] + i][index[1] + j] === 2) count++;
-        // }
-        // return count;
-    }
-
-    // to make the game actually start
-    // playButton() {
-    //     // this makes play() not have access to entireGrid - what is wrong? how do these methods work?
-    //     clearInterval(this.intervalId);
-    //     this.intervalId = setInterval(this.play2, this.speed);
-    // };
-
-    // testPlay() {
-    //     this.play2();
     // }
-    // after the component (grid) mounts, we want to invoke random to test the grid
-    // componentDidMount() {
-    //     // this.random();
-    //     // this.play();
-    //     // this.playButton();
-    //     this.testPlay();
-    // };
-
-    render() {
-      return (
-        <div>
-            <h1> The Game of Life </h1>
-            <Grid
-                entireGrid={this.state.entireGrid} 
-                rows={this.rows}
-                columns={this.columns}
-                colorBox={this.colorBox}
-                play2={this.play2}
-            />
-            <h2> Generation: {this.state.generation} </h2>
-        </div>
-      );
-    }
-  }
-  
-  export default App;
