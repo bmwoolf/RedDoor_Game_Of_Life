@@ -1,5 +1,5 @@
 {
-  "homepage": "https://bmwoolf.github.io/RedDoor_Game_Of_Life/",
+  "homepage": "https://github.com/bmwoolf/RedDoor_Game_Of_Life#readme",
   "name": "RedDoor_Game_Of_Life",
   "version": "1.0.0",
   "description": "Take-home for RedDoor.",
@@ -22,7 +22,6 @@
   "bugs": {
     "url": "https://github.com/bmwoolf/RedDoor_Game_Of_Life/issues"
   },
-  "homepage": "https://github.com/bmwoolf/RedDoor_Game_Of_Life#readme",
   "dependencies": {
     "@babel/plugin-proposal-class-properties": "^7.8.3",
     "body-parser": "^1.19.0",
@@ -43,6 +42,7 @@
     "@babel/preset-react": "^7.8.3",
     "babel-loader": "^8.0.6",
     "concurrently": "^5.1.0",
+    "gh-pages": "^2.2.0",
     "nodemon": "^2.0.2",
     "webpack": "^4.41.6",
     "webpack-cli": "^3.3.11",
