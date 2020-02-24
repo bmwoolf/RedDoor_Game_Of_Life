@@ -6,7 +6,7 @@ const Buttons = (props) => {
     const easterEgg = () => {
         const root = document.getElementById('root');
         root.classList.add('easter-egg');
-        
+
         const colorGen = () => {
           const r = Math.floor(Math.random() * 256);
           const g = Math.floor(Math.random() * 256);
@@ -31,6 +31,6 @@ const Buttons = (props) => {
             <button className="button" onClick={easterEgg}> Click me! </button>
         </div>
      );
-}
+};
  
 export default Buttons;
