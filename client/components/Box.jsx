@@ -12,11 +12,9 @@ const Box = (props) => {
     return ( 
         <div 
           className={props.boxClass}
-        //   className={boxClass}
           id={props.key}
           onClick={() => color()}
-        >
-        </div>
+        ></div>
     );
 }
  

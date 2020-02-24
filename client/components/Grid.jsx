@@ -4,7 +4,6 @@ import Box from './Box.jsx';
 const Grid = (props) => {
     const width = props.columns * 16;
     let rowsArr = [];
-
     let boxClass = "";
 
     for (let i = 0; i < props.rows; i++) {
@@ -14,7 +13,6 @@ const Grid = (props) => {
             rowsArr.push(
                 <Box 
                     boxClass={boxClass}
-                    // key={boxKey}
                     boxId={boxKey}
                     row={i}
                     column={j}
@@ -24,7 +22,7 @@ const Grid = (props) => {
                 />
             );
         }
-    }
+    };
 
     return ( 
         <div className="grid" style={{width: width}}> 

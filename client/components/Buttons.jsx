@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 
 const Buttons = (props) => {
 
+    // functionality for easter egg
     const easterEgg = () => {
-    
         const root = document.getElementById('root');
         root.classList.add('easter-egg');
+        
         const colorGen = () => {
           const r = Math.floor(Math.random() * 256);
           const g = Math.floor(Math.random() * 256);

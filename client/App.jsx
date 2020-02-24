@@ -19,8 +19,8 @@ class App extends Component {
       this.random = this.random.bind(this);
       this.go = this.go.bind(this);
       this.aliveNeighbors = this.aliveNeighbors.bind(this);
-      this.pause = this.pause.bind(this);
       this.playButton = this.playButton.bind(this);
+      this.pause = this.pause.bind(this);
     };
 
     // onClick, we want to fill the individual boxes 
@@ -50,7 +50,8 @@ class App extends Component {
             entireGrid: mirrorGrid
         })
     };
-    
+
+    // main logic function
     go() {
         let mirrorGrid = [...this.state.entireGrid];
         for (let i = 0; i < mirrorGrid.length; i++) {
@@ -127,45 +128,3 @@ class App extends Component {
   };
   
   export default App;
-
-    // play2() {   
-    //     console.log('in here')
-    //     let grid1 = this.state.entireGrid;
-    //     // why can i not access this.state.entireGrid when calling playButton?
-    //     let grid2 = [...this.state.entireGrid]
-        
-    //     for (let i = 0; i < this.rows; i++) {
-    //         for (let j = 0; j < this.columns; j++) {
-    //             let count = 0;
-    //             if (i > 0) if (grid1[i - 1][j]) count++;
-    //             if (i > 0 && j > 0) if (grid1[i - 1][j - 1]) count++;
-    //             if (i > 0 && j < this.cols - 1) if (grid1[i - 1][j + 1]) count++;
-    //             if (j < this.cols - 1) if (grid1[i][j + 1]) count++;
-    //             if (j > 0) if (grid1[i][j - 1]) count++;
-    //             if (i < this.rows - 1) if (grid1[i + 1][j]) count++;
-    //             if (i < this.rows - 1 && j > 0) if (grid1[i + 1][j - 1]) count++;
-    //             if (i < this.rows - 1 && j < this.cols - 1) if (grid1[i + 1][j + 1]) count++;
-    //             if (grid1[i][j] && (count < 2 || count > 3)) grid2[i][j] = false;
-    //             if (!grid1[i][j] && count === 3) grid2[i][j] = true;
-    //         }
-    //     }
-        
-    // logic from line 72
-    //     this.setState({
-            // entireGrid: grid2,
-            // generation: this.state.generation + 1
-    //     });
-    // }
-
-            // looping through again
-        // for (let i = 0; i < mirrorGrid.length; i++) {
-        //     for (let j = 0; j < mirrorGrid[i].length; j++){
-        //         // current box mod 2
-        //         // input 2 -> 0, input 3 -> 1
-        //       mirrorGrid[i][j] %= 2;
-
-        //       if(mirrorGrid[i][j] === 1)
-        //         this.colorBox()
-                
-        //     }
-        //   }
