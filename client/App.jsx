@@ -37,7 +37,6 @@ class App extends Component {
 
     // generate random spots on the grid to start the game (cannot start wwith just one cell)
     random() {
-        console.log('random happened')
         let mirrorGrid = [...this.state.entireGrid];
         for (let i = 0; i < this.rows; i++) {
             for (let j = 0; j < this.columns; j++) {
