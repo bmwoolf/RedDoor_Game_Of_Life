@@ -19,7 +19,7 @@ const Grid = (props) => {
                     row={i}
                     column={j}
                     colorBox={props.colorBox}
-                    play2={props.play2}
+                    go={props.go}
                     value={props.entireGrid[i][j]}
                 />
             );
