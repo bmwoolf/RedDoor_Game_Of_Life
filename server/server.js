@@ -12,8 +12,6 @@ app.get('/', (req, res) => {
     res.status(200).sendFile(path.join(__dirname, '../index.html'));
 });
 
-
-
 // 404 handler
 app.use('*', (req, res) => {
     res.sendStatus(404);
