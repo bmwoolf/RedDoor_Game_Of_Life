@@ -6,7 +6,7 @@ const Grid = (props) => {
     let rowsArr = [];
 
     let boxClass = "";
-//change to map method
+
     for (let i = 0; i < props.rows; i++) {
         for (let j = 0; j < props.columns; j++) {
             let boxKey = `${i}-${j}`;
@@ -20,6 +20,7 @@ const Grid = (props) => {
                     column={j}
                     colorBox={props.colorBox}
                     play2={props.play2}
+                    value={props.entireGrid[i][j]}
                 />
             );
         }
