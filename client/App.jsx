@@ -40,7 +40,7 @@ class App extends Component {
         let mirrorGrid = [...this.state.entireGrid];
         for (let i = 0; i < this.rows; i++) {
             for (let j = 0; j < this.columns; j++) {
-                if (Math.floor(Math.random() * 8) == 1) {
+                if (Math.floor(Math.random() * 5) == 1) {
                     mirrorGrid[i][j] = 1;
                 }
             }
